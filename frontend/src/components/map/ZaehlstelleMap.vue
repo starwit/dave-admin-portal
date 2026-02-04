@@ -384,16 +384,17 @@ function createBaseLayers(): L.Control.LayersObject {
 }
 
 function createOverlayLayers(): L.Control.LayersObject {
-  const stadtbezirke = L.tileLayer.wms(
-    "https://geoportal.muenchen.de/geoserver/gsm/wms?",
+  const wobbezirke = L.tileLayer.wms(
+    "https://geoviewer.stadt.wolfsburg.de/default/ows/projects/gpt/stadtplan?",
     {
-      layers: "gsm:stadtbezirk",
+      layers: "stadtteile_a_ot,stadtteile_a_st,stadtgrenze_a",
       className: "Stadtbezirke",
       transparent: true,
       format: "image/png",
       attribution: mapAttributionLhm,
     }
-  );
+  );  
+
   const stadtviertel = L.tileLayer.wms(
     "https://geoportal.muenchen.de/geoserver/gsm/wms?",
     {
@@ -416,7 +417,7 @@ function createOverlayLayers(): L.Control.LayersObject {
   );
 
   return {
-    Stadtbezirke: stadtbezirke,
+    WobBezirke: wobbezirke,
     Stadtviertel: stadtviertel,
     Lichtsignalanlagen: lichtsignalanlagen,
   };
