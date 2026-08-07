@@ -133,9 +133,12 @@ watch(
 
 watch(
   () => zaehlung.value.zaehlart,
-  () => {
-    zaehlung.value.kategorien = [];
-  }
+  (newValue, oldValue) => {
+    if (oldValue !== undefined && newValue !== oldValue) {
+      zaehlung.value.kategorien = [];
+    }
+  },
+  { immediate: true }
 );
 
 watch(

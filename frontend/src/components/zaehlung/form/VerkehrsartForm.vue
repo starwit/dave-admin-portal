@@ -119,7 +119,7 @@ watch(
 );
 
 watch(
-  () => zaehlung.value.kategorien,
+  () => zaehlung.value,
   () => {
     resetForm();
   },
