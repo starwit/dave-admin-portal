@@ -102,15 +102,7 @@ function initMap(): void {
 function createLayersAndAddToMap(): void {
   const baseLayers = createBaseLayers();
   const overlayLayers = createOverlayLayers();
-<<<<<<< HEAD
   baseLayers.OpenStreetMaps.addTo(minimap);
-=======
-  baseLayers.Stadtkarte.addTo(minimap);
-  if (props.activateOverlays) {
-    overlayLayers.Stadtbezirke.addTo(minimap);
-    overlayLayers.Stadtviertel.addTo(minimap);
-  }
->>>>>>> 4f47853 (Merge Hotfixes from demo to sprint)
   L.control.layers(baseLayers, overlayLayers).addTo(minimap);
 }
 
