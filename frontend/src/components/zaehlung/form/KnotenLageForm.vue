@@ -305,9 +305,9 @@ function deleteAllFahrbeziehungByKnotenarmnummer(nummer: number) {
 }
 
 const coordsZaehlstelle = computed(() => {
-  const punkt: GeoPoint = props.zaehlstelle.punkt;
-  if (punkt) {
-    return new LatLng(parseFloat(punkt.lat), parseFloat(punkt.lon));
+  const { lat, lng } = props.zaehlstelle;
+  if (lat != null && lng != null) {
+    return new LatLng(lat, lng);
   } else {
     return DefaultObjectCreator.createCenterOfMunichLatLng();
   }

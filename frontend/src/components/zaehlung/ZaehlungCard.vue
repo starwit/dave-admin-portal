@@ -286,7 +286,8 @@ const ICON_COLOR = "black";
 const deleteDialogText = ref("Wollen Sie die Zählung wirklich löschen?");
 
 interface Props {
-  geoPointZaehlstelle: GeoPoint;
+  latZaehlstelle: number;
+  lngZaehlstelle: number;
   zaehlstelleId: string;
 }
 const properties = defineProps<Props>();
@@ -313,10 +314,7 @@ const isBeauftragen = ref(true);
 const showBeauftragenDialog = ref(false);
 
 const coordsZaehlstelle = computed(() => {
-  return createLatLngFromString(
-    properties.geoPointZaehlstelle.lat,
-    properties.geoPointZaehlstelle.lon
-  );
+  return new LatLng(properties.latZaehlstelle, properties.lngZaehlstelle);
 });
 
 const coordsZaehlung = computed(() => {

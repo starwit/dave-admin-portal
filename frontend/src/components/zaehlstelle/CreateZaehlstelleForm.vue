@@ -149,7 +149,6 @@
 
 <script setup lang="ts">
 import type BackendIdDTO from "@/types/common/BackendIdDTO";
-import type GeoPoint from "@/types/common/GeoPoint";
 import type NextZaehlstellennummerDTO from "@/types/zaehlstelle/NextZaehlstellennummerDTO";
 
 import { LatLng } from "leaflet";
@@ -280,8 +279,8 @@ function addSuchwortToList() {
 
 function save(): void {
   if (validZaehlstelle.value) {
-    zaehlstelle.value.lat = props.coords.lat;
-    zaehlstelle.value.lng = props.coords.lng;
+    zaehlstelle.value.lat ??= props.coords.lat;
+    zaehlstelle.value.lng ??= props.coords.lng;
     zaehlstelle.value.customSuchwoerter = suchwoerter.value;
     zaehlstelle.value.sichtbarDatenportal = true;
     ZaehlstellenService.saveZaehlstelle(zaehlstelle.value)
@@ -311,10 +310,7 @@ function resetZaehlstelle() {
 }
 
 function updateZaehlstellenCoords(newCoords: LatLng): void {
-  if (!zaehlstelle.value.punkt) {
-    zaehlstelle.value.punkt = {} as GeoPoint;
-  }
-  zaehlstelle.value.punkt.lat = newCoords.lat.toString();
-  zaehlstelle.value.punkt.lon = newCoords.lng.toString();
+  zaehlstelle.value.lat = newCoords.lat;
+  zaehlstelle.value.lng = newCoords.lng;
 }
 </script>
