@@ -105,7 +105,6 @@
 </template>
 
 <script setup lang="ts">
-import type GeoPoint from "@/types/common/GeoPoint";
 import type ZaehlstelleDTO from "@/types/zaehlstelle/ZaehlstelleDTO";
 
 import { LatLng } from "leaflet";
@@ -139,8 +138,8 @@ const newSuchwort = ref("");
 const selectedImage = ref<File | null>(null);
 
 const coords = computed(() => {
-  const punkt: GeoPoint = zaehlstelle.value.punkt;
-  if (punkt) return new LatLng(parseFloat(punkt.lat), parseFloat(punkt.lon));
+  const { lat, lng } = zaehlstelle.value;
+  if (lat != null && lng != null) return new LatLng(lat, lng);
   else return DefaultObjectCreator.createCenterOfMunichLatLng();
 });
 
@@ -218,10 +217,7 @@ function cancel(): void {
 }
 
 function updateZaehlstellenCoords(newCoords: LatLng): void {
-  if (!zaehlstelle.value.punkt) {
-    zaehlstelle.value.punkt = {} as GeoPoint;
-  }
-  zaehlstelle.value.punkt.lat = newCoords.lat.toString();
-  zaehlstelle.value.punkt.lon = newCoords.lng.toString();
+  zaehlstelle.value.lat = newCoords.lat;
+  zaehlstelle.value.lng = newCoords.lng;
 }
 </script>

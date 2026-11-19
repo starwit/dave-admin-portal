@@ -111,7 +111,8 @@
           <zaehlung-card
             v-model="card.zaehlung"
             :zaehlstelle-id="zaehlstelle.id"
-            :geo-point-zaehlstelle="zaehlstelle.punkt"
+            :lat-zaehlstelle="zaehlstelle.lat"
+            :lng-zaehlstelle="zaehlstelle.lng"
             @open-zaehlung-dialog="openZaehlungDialog"
             @open-zaehlung-datenportal="openZaehlungDatenportal"
             @open-chat-dialog="openChatDialog"
@@ -295,11 +296,11 @@ const kreuzungsname = computed(() => {
 });
 
 /**
- * Erzeugt aus dem übergebenen Punkt ein Array aus lat und lon.
+ * Erzeugt aus den Koordinaten der Zählstelle ein Array aus lat und lng.
  */
 const latlng = computed(() => {
-  if (zaehlstelle.value.punkt != null) {
-    return [zaehlstelle.value.punkt.lat, zaehlstelle.value.punkt.lon];
+  if (zaehlstelle.value.lat != null && zaehlstelle.value.lng != null) {
+    return [String(zaehlstelle.value.lat), String(zaehlstelle.value.lng)];
   } else {
     return [];
   }
@@ -337,7 +338,12 @@ function editZaehlstelle() {
 
 function createDefaultZaehlungDTO(): ZaehlungDTO {
   const zaehlung: ZaehlungDTO = DefaultObjectCreator.createDefaultZaehlungDTO();
-  zaehlung.punkt = cloneDeep(zaehlstelle.value.punkt);
+  if (zaehlstelle.value.lat != null && zaehlstelle.value.lng != null) {
+    zaehlung.punkt = {
+      lat: String(zaehlstelle.value.lat),
+      lon: String(zaehlstelle.value.lng),
+    };
+  }
   zaehlung.zaehlIntervall = 15;
   const time = new Date().toLocaleTimeString(navigator.language, {
     hour: "2-digit",
